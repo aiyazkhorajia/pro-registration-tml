@@ -12,9 +12,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-if ( !is_plugin_active( 'theme-my-login/theme-my-login.php' ) ) {
-	deactivate_plugins( plugin_basename( __FILE__ ) );
-	add_action('admin_notices', 'tml_activation_warning');
+add_action( 'admin_init', 'check_tml_is_active' );
+
+function check_tml_is_active(){
+	if ( !is_plugin_active( 'theme-my-login/theme-my-login.php' ) ) {
+		deactivate_plugins( plugin_basename( __FILE__ ) );
+		add_action('admin_notices', 'tml_activation_warning');
+	}
 }
 
 function tml_activation_warning() {
@@ -25,7 +29,18 @@ function tml_activation_warning() {
 /* Register style and script */
 
 function rpdd_wp_enqueue() {
-	wp_register_script( 'jquery', plugins_url( 'js/jquery-3.2.1.min.js', __FILE__ ) );
+	wp_register_script( 'rpdd-bootstrap-min', plugins_url( 'js/bootstrap.min.js', __FILE__ ) );
+	wp_register_script( 'rpdd-datetimepicker', plugins_url( 'js/bootstrap-datetimepicker.js', __FILE__ ) );
+	wp_register_script( 'rpdd-main', plugins_url( 'js/main.js', __FILE__ ) );
+	wp_register_style( 'rpdd-bootstrap-min-css', plugins_url( 'css/bootstrap.min.css', __FILE__ ) );
+	wp_register_style( 'rpdd-datetimepicker-css', plugins_url( 'css/bootstrap-datetimepicker.css', __FILE__ ) );
+	
+	wp_enqueue_style( 'rpdd-bootstrap-min-css' );
+	wp_enqueue_style( 'rpdd-datetimepicker-css' );
+	
+	wp_enqueue_script( 'rpdd-bootstrap-min' );
+	wp_enqueue_script( 'rpdd-datetimepicker' );
+	wp_enqueue_script( 'rpdd-main' );
 }
 
 add_action( 'wp_enqueue_scripts', 'rpdd_wp_enqueue' );
@@ -145,7 +160,7 @@ function rpdd_register_shortcode_function() {
 		if ( $data_type === 'date' ) {
 			$label    = $field->label;
 			$required = $field->required;
-			$html    .= '<p class="tml-user-login-wrap"><label class="control-label">' . $label . '</label><input type="date" name="' . $name . '" placeholder="' . $placeholder . '" class="form-control" ' . $required . '/></p>';
+			$html    .= '<p class="tml-user-login-wrap"><label class="control-label">' . $label . '</label><input type="text" name="' . $name . '" id="datepicker" class="date-picker form-control" ' . $required . '/></p>';
 		}
 		if ( $data_type === 'radio' ) {
 			$options     = $field->options;

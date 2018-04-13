@@ -1,13 +1,6 @@
-body {
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+.panel.panel-default {
+    padding-top: 15px;
 }
-
-.header {
-    padding-bottom: 1rem;
-    border-bottom: .05rem solid #e5e5e5;
-}
-
 .form_builder .nav-sidebar { 
     width: 100%;
     background-color: #0073aa;
@@ -99,11 +92,11 @@ body {
     margin-bottom: 5px;
 }
 .form_builder_area {
-    width:100%;
-    min-height:50px;
-    position: absolute
+    width: 100%;
+    min-height: 315px;
+    position: absolute;
+    border: 1px solid #dedede;
 }
-
 .mt-radio {
     display: block;
 }
